@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="{{ url_for('static', filename='code.js') }}"></script>
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="base-navbar">
+        <ul>
+            
+            <li><a href="{{ url_for('views.staff')}}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('views.staff_search')}}"><i class="fas fa-search"></i> Search</a></li>
+            <li><a href="{{ url_for('auth.logout')}}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </nav>
+    <div class="base-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+
+    
+</body>
+</html>

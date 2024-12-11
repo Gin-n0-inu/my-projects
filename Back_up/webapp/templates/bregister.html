@@ -1,0 +1,75 @@
+{% extends "administrator_base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="manage-container">
+    <div id="staff-registry">
+        <h1>{{ 'Update Account' if selected_user else 'Register Account' }}</h1>
+        <form method="post" action="{{ url_for('auth.save_user') }}">
+            <input type="hidden" id="user_id" name="user_id" value="{{ selected_user[0] if selected_user else '' }}"> <!-- Hidden input for the user ID -->
+            <input type="text" id="lname" name="lname" placeholder="Last Name" value="{{ selected_user[1] if selected_user else '' }}" required>
+            <input type="text" id="fname" name="fname" placeholder="First Name" value="{{ selected_user[2] if selected_user else '' }}" required>
+            <input type="text" id="mname" name="mname" placeholder="Middle Name" value="{{ selected_user[3] if selected_user else '' }}">
+            <input type="text" id="uname" name="uname" placeholder="Enter Username" value="{{ selected_user[4] if selected_user else '' }}" required>
+            <input type="password" id="upassword1" name="upassword1" placeholder="Enter Password" required>
+            <input type="password" id="upassword2" name="upassword2" placeholder="Re-Enter Password" required>
+            
+            <input type="text" id="syslocation" name="syslocation" placeholder="System Location" value="{{ selected_user[5] if selected_user else '' }}">
+            <select name="is_admin" required>
+                <option value="" disabled selected>Admin Access</option>
+                <option value="true" {% if selected_user and selected_user[7] == 0 %}selected{% endif %}>Staff</option>
+                <option value="false" {% if selected_user and selected_user[7] == 1 %}selected{% endif %}>Admin</option>
+            </select>
+            <button type="submit">{{ 'Update' if selected_user else 'Submit' }}</button>
+        </form>
+        <!-- Display the flash message as a pop-up if it exists -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[0] }}");
+        </script>
+    {% endif %}
+    {% endwith %}
+
+    </div>
+    <div class="account-list">
+        <h1>Accounts List</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>System Location</th>
+                        <th>Admin Access</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in staff_data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                        <td>{{ "Admin" if row[6] == 0 else "Staff" }}</td>
+                        <td>
+                            <a href="{{ url_for('auth.sign_up', user_id=row[0]) }}">Edit</a>
+                            <form action="{{ url_for('auth.delete_user') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="user_id" value="{{ row[0] }}">
+                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this entry?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

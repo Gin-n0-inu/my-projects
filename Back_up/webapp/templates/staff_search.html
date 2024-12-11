@@ -1,0 +1,46 @@
+{% extends "staff_base.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+
+<header class="base-header">
+    <h1>Welcome to Your Dashboard</h1>
+    <div class="search-bar">
+        <form action="{{ url_for('auth.staff_s') }}" method="POST">
+            <input type="text" name="search_query" placeholder="Enter ID, Tracking Code, Name, Document, or Location">
+            <input type="submit" value="Search">
+        
+    </div>
+</header>
+<div class="track-table">
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tracking Code</th>
+                <th>Requestor Name</th>
+                <th>Document</th>
+                <th>Date and Time</th>
+                <th>Status</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example rows, you can dynamically populate this later -->
+            {% for row in process_data %}
+            <tr>
+                <td>{{ row[0] }}</td> <!-- requestor_id -->
+                <td>{{ row[1] }}</td> <!-- tracking_code -->
+                <td>{{ row[2] }}</td> <!-- requestor_name -->
+                <td>{{ row[3] }}</td> <!-- document -->
+                <td>{{ row[4] }}</td> <!-- date_time -->
+                <td>{{ row[5] }}</td> <!-- status -->
+                <td>{{ row[6] }}</td> <!-- location -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

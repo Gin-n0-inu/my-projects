@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    <script src="{{ url_for('static', filename='code.js') }}"></script>
+    <title>Confirmation</title>
+</head>
+<body>
+
+    <div class="confirmation-container">
+        <h2>Document Tracking Code</h2>
+        <hr>
+        <p><strong>Tracking Code:</strong> {{ request_data[0] }}</p>
+        <p><strong>Requestor Name:</strong> {{ request_data[1] }}</p>
+        <p><strong>Document:</strong> {{ request_data[2] }}</p>
+        <p><strong>Date and Time:</strong> {{ request_data[3] }}</p>
+    
+        <a href="{{ url_for('views.add1') }}" class="button-common back-link">Back</a>
+        <button class="button-common print-button" onclick="window.print();">Print</button>
+    </div>
+    
+</body>
+</html>

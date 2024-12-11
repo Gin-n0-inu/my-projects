@@ -1,0 +1,99 @@
+{% extends "staff_base.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+
+<div class="search-container">
+    <div class="search-bar">
+        <form action="{{ url_for('auth.staff_dashboard') }}" method="POST">
+            <input type="text" id="search-input" name="search-input" placeholder="Enter Tracking Code">
+            <input type="submit" id="search-btn" name="search-btn" value="Search">
+        </form>
+        
+    </div>
+    
+    <header class="base-header">
+        <h1>{{ user_location }} Dashboard</h1>
+        <!-- Flash messages section -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="flash-message flash-{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+    </header>
+    <div class="track-table">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tracking Code</th>
+                    <th>Requestor Name</th>
+                    <th>Document</th>
+                    <th>Date and Time</th>
+                    <th>
+                        <label for="statusFilter">Status</label>
+                        <select id="statusFilter" onchange="filterAndSort()">
+                            <option value="all">All ({{ total_count }})</option>
+                            <option value="Pending">Pending ({{ status_counts['Pending'] }})</option>
+                            <option value="Transfer">Transfer ({{ status_counts['Transfer'] }})</option>
+                            <option value="Completed">Completed ({{ status_counts['Completed'] }})</option>
+                        </select>
+                    </th>
+                    <th>Location</th>
+                    <th>Action</th> <!-- New column for action -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in process_data %}
+                <tr>
+                    <td>{{ row[0] }}</td> <!-- requestor_id -->
+                    <td>{{ row[1] }}</td> <!-- tracking_code -->
+                    <td>{{ row[2] }}</td> <!-- requestor_name -->
+                    <td>{{ row[3] }}</td> <!-- document -->
+                    <td>{{ row[4] }}</td> <!-- date_time -->
+                    <td class="status">{{ row[5] }}</td> <!-- status -->
+                    <td>{{ row[6] }}</td> <!-- location -->
+                
+                    <td>
+                        
+                        
+                        {% if current_user.is_admin == 3 %}
+                        <form action="{{ url_for('auth.staff_dashboard') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="complete_data" value="{{ row[1] }}">
+                            <button type="submit" class="complete-btn" onclick="return confirm('Are you sure you want to mark {{ row[1] }} as complete?');">Complete</button>
+                        </form>
+                        <form action="{{ url_for('auth.staff_dashboard') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="update_data" value="{{ row[1] }}">
+                            <button type="submit" class="update-btn" onclick="return confirm('Are you sure you want to {{ row[1] }}?');">Update</button>
+                        </form>
+                        {% else %}
+                        <form action="{{ url_for('auth.staff_dashboard') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="transfer_data" value="{{ row[1] }}">
+                            <button type="submit" class="transfer-btn" onclick="return confirm('Are you sure you want to mark {{ row[1] }} as Transfer?');">Transfer</button>
+                        </form>
+                        <form action="{{ url_for('auth.staff_dashboard') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="update_data" value="{{ row[1] }}">
+                            <button type="submit" class="update-btn" onclick="return confirm('Are you sure you want to {{ row[1] }}?');">Update</button>
+                        </form>
+                        {% endif %}
+                        
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8">No results found for this tracking code.</td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+{% endblock %}
