@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<!-- Flash message popup container -->
+
+    <div class="process-container">
+        <div class="process-form">
+            <form action="{{ url_for('auth.add_request')}}" method="POST">
+                <div class="rqtr-info">
+                    <h1>Add Request</h1>
+                    <label for="rqtr_fname">*First Name</label>
+                    <input type="text" name="rqtr_fname" id="rqtr_fname" placeholder="First Name" required>
+            
+                    <label for="rqtr_mname">*Middle Name</label>
+                    <input type="text" name="rqtr_mname" id="rqtr_mname" placeholder="Middle Name" required>
+            
+                    <label for="rqtr_lname">*Last Name</label>
+                    <input type="text" name="rqtr_lname" id="rqtr_lname" placeholder="Last Name" required>
+            
+                    <label for="rqtr_age">*Age</label>
+                    <input type="text" name="rqtr_age" id="rqtr_age" placeholder="Age" required>
+            
+                    <label for="rqtr_sex">*Gender</label>
+                    <select name="rqtr_sex" id="rqtr_sex" required>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                    </select>
+            
+                    <label for="rqtr_number">*Mobile Number</label>
+                    <input type="text" name="rqtr_number" id="rqtr_number" placeholder="Mobile Number" pattern="[0-9]{11}" required>
+            
+                    <label for="rqtr_email">*Email</label>
+                    <input type="email" name="rqtr_email" id="rqtr_email" placeholder="Enter Valid Email" required>
+            
+                    <label for="doc_info">*Document</label>
+                    <select name="doc_info" id="doc_info" required>
+                        <option value="" disabled selected>Document</option>
+                        <option value="Voucher">Voucher</option>
+                        <option value="Procurement">Procurement</option>
+                    </select>
+                    <input type="date" name="date_time" id="date_time">
+                </div>
+            
+                <div class="code-generator">
+                    <input type="text" name="track_code" id="track_code" placeholder="Generate Code" required readonly>
+                    <button type="button" onclick="generateCode()">Generate Code</button>
+                </div>
+                
+                <input type="submit" id="save_process" name="save_process" value="Submit">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="popup">
+                {% for category, message in messages %}
+                    <p class="flash-message flash-{{ category }}">{{ message }}</p>
+                {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+            </form>
+            
+        </div>
+    </div>
+{% endblock %}

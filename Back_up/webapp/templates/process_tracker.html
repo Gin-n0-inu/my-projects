@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='track.css') }}">
+    <title>{% block title %}Document Tracker{% endblock %}</title>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <form action="{{ url_for('auth.doc_tracker') }}" method="POST">
+                <input type="text" id="search-input" name="search-input" placeholder="Enter Tracking Code" value="{{ request.form.get('search-input', '') }}">
+                <input type="submit" id="search-btn" name="search-btn" value="Search">
+                <input type="reset" id="clear-btn" name="clear-btn" value="Clear">
+            </form>
+        </div>
+        <div class="track-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tracking Code</th>
+                        <th>Requestor Name</th>
+                        <th>Document</th>
+                        <th>Date and Time</th>
+                        <th>Status</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if process_data %}
+                        {% for row in process_data %}
+                        <tr>
+                            <td>{{ row[0] }}</td> <!-- requestor_id -->
+                            <td>{{ row[1] }}</td> <!-- tracking_code -->
+                            <td>{{ row[2] }}</td> <!-- requestor_name -->
+                            <td>{{ row[3] }}</td> <!-- document -->
+                            <td>{{ row[4] }}</td> <!-- date_time -->
+                            <td>{{ row[5] }}</td> <!-- status -->
+                            <td>{{ row[6] }}</td> <!-- location -->
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7">No data to show. Please enter a tracking code.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{{ url_for('views.home')}}" class="back-button">Back</a>
+    </div>
+    <script>
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            window.location.href = "{{ url_for('auth.doc_tracker') }}";
+        });
+    </script>
+</body>
+</html>

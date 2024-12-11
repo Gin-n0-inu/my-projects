@@ -1,0 +1,115 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e0efe8, #97b7a3); /* Gradient background with lighter Spartan Green tones */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container for the form */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background-color: #ffffff; /* White background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+}
+
+/* Form heading */
+h1 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #18453B; /* Spartan Green for the text */
+}
+
+/* Input fields */
+.input-group {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #97b7a3; /* Lighter Spartan Green */
+    border-radius: 8px;
+    background-color: #f0f7f4; /* Subtle light green background */
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"],
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #18453B; /* Spartan Green border on focus */
+    box-shadow: 0 0 8px rgba(24, 69, 59, 0.2); /* Soft glow on focus with Spartan Green tone */
+}
+
+/* Submit button */
+#login-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #18453B; /* Spartan Green button */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#login-submit:hover {
+    background-color: #122f28; /* Darker Spartan Green on hover */
+}
+
+/* Links under the form */
+.extra-links {
+    margin-top: 20px;
+}
+
+.extra-links a {
+    color: #18453B; /* Spartan Green for links */
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* Flash messages styling */
+.flash-messages {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+}
+
+/* Red background for danger messages */
+.flash-message.flash-danger {
+    background-color: #e57373; /* Adjust to your preferred shade of red */
+}
+
+.flash-message.flash-success {
+    background-color: #81c784; /* Green background for success messages */
+}
